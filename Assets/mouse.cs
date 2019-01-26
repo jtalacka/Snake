@@ -12,13 +12,10 @@ public class mouse : MonoBehaviour
     private Vector3 tempMouse;
     private static bool once = true;
     public int numberOfBodies;
-    public Vector2 PreviousLocation;
     private Vector2 tempLocation;
     // Start is called before the first frame update
     void Start()
     {
-        PreviousLocation = new Vector2(transform.position.x, transform.position.y);
-        tempLocation = new Vector2(transform.position.x, transform.position.y);
         GetClick = false;
         temp = power;
         tempMouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -34,30 +31,23 @@ public class mouse : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        print(1 / Time.deltaTime);
+       // print(1 / Time.deltaTime);
         if (Input.GetMouseButton(0))
         {
             GetClick = true;
         }
-        else {GetClick=false; }
-        
+        else { GetClick = false; }
+
     }
     void FixedUpdate()
     {
-      //  if (Vector2.Distance(tempLocation, transform.position) >0.5f)
-        {
 
-            PreviousLocation.x = tempLocation.x;
-            tempLocation.x=transform.position.x;
-
-            PreviousLocation.y = tempLocation.y;
-            tempLocation.y = transform.position.y;
-        }
 
         mouseDirection();
         this.GetComponent<Rigidbody2D>().AddRelativeForce(new Vector2(0, temp));
-        if (GetClick) {
-            temp = power*3;
+        if (GetClick)
+        {
+            temp = power * 3;
 
         }
         else
@@ -91,13 +81,15 @@ public class mouse : MonoBehaviour
         }
     }
 
-    private void rotation(Vector3 direction) {
+    private void rotation(Vector3 direction)
+    {
 
         // Vector3 newDir = Vector3.RotateTowards(transform.forward, direction, rotationSpeed * Time.deltaTime, 0.0f);
 
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg-90;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90;
         float tempAngle;
-        if (angle < 0) { tempAngle = 360 + angle; } else
+        if (angle < 0) { tempAngle = 360 + angle; }
+        else
         {
             tempAngle = angle;
         }
@@ -117,8 +109,8 @@ public class mouse : MonoBehaviour
         for (int i = 1; i < numberOfBodies; i++)
         {
             bodies[i] = Instantiate(body);
-            bodies[i].GetComponent<test>().parent = bodies[i - 1];
-            bodies[i].transform.position = new Vector3(0,-0.1f * (i + 1),10);
+            bodies[i].GetComponent<test>().parent = bodies[i - 1].transform;
+            bodies[i].transform.position = new Vector3(0, -10f, i + 5);
             bodies[i].name = i.ToString();
 
 
@@ -126,5 +118,20 @@ public class mouse : MonoBehaviour
 
 
 
+    }
+
+    public override int GetHashCode()
+    {
+        return base.GetHashCode();
+    }
+
+    public override bool Equals(object other)
+    {
+        return base.Equals(other);
+    }
+
+    public override string ToString()
+    {
+        return base.ToString();
     }
 }

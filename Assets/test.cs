@@ -4,14 +4,21 @@ using UnityEngine;
 
 public class test : MonoBehaviour
 {
-    public GameObject parent;
-    public Vector2 PreviousLocation;
+    public Transform parent;
+    private Vector2 PreviousLocation;
+    private Quaternion PreviousRotation;
+    private Vector2 TempLocation;
+    private Quaternion TempRotation;
     private float Count;
 
     // Start is called before the first frame update
     void Start()
     {
-        PreviousLocation = new Vector2(transform.position.x, transform.position.y);
+        PreviousLocation = transform.position;
+        TempLocation = transform.position;
+       // PreviousRotation = transform.rotation;
+       // TempRotation = transform.rotation;
+
         Count = 0f;
 
       //  check = new Vector3(parent.transform.position.x,parent.transform.position.y);
@@ -20,37 +27,20 @@ public class test : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        Count += Time.deltaTime;
+        if (Vector2.Distance(parent.position, PreviousLocation) > 0.2f)
         {
-            Count = 0;
-
-
-
-            
-            if (Vector2.Distance(parent.transform.position, transform.position) > 0.2f)
+            if (name == "5")
             {
-                // print(Vector2.Distance(parent.transform.position, transform.position));
-                PreviousLocation.x = transform.position.x;
-                PreviousLocation.y = transform.position.y;
-
-                if (this.gameObject.name == "body")
-                {
-
-               //     if ()
-                    {
-                        transform.position = (parent.GetComponent<mouse>().PreviousLocation);
-                    }
-                }
-                else
-                {
-              //      if ()
-                    {
-                        transform.position = parent.GetComponent<test>().PreviousLocation;
-                    }
-                }
+                print(Vector2.Distance(parent.position, PreviousLocation));
             }
-        }
+            TempLocation = PreviousLocation;
+            TempRotation = PreviousRotation;
+            transform.position = new Vector3(PreviousLocation.x, PreviousLocation.y, transform.position.z);
+            transform.rotation = PreviousRotation;
+            PreviousLocation = parent.position;
+            PreviousRotation = parent.rotation;
 
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
