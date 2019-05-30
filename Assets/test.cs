@@ -27,6 +27,7 @@ public class test : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        transform.LookAt(parent, Vector3.up);
         if (Vector2.Distance(parent.position, PreviousLocation) > 0.2f)
         {
             if (name == "5")
@@ -36,7 +37,6 @@ public class test : MonoBehaviour
             TempLocation = PreviousLocation;
             TempRotation = PreviousRotation;
             transform.position = new Vector3(PreviousLocation.x, PreviousLocation.y, transform.position.z);
-            transform.rotation = PreviousRotation;
             PreviousLocation = parent.position;
             PreviousRotation = parent.rotation;
 
